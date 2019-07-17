@@ -3,6 +3,4 @@ Estimating Sthe proportion of spurious alignments in ancient DNA as escribed in 
 
 Although the method is applied directly to hominin DNA, it works with any spiecies as long as there is a close reference genome and some data of the variation within spieces.
 
-For the time being have a look at the following link for a full description of the procedure.
-
-https://bioinf.eva.mpg.de/SpAl/
+For the time being have a look at the following link for a full description of the procedure https://bioinf.eva.mpg.de/SpAl/
