@@ -1,7 +1,6 @@
 # SpAl
-Estimating Spurious Alignments in ancient DNA
+Estimating Sthe proportion of spurious alignments in ancient DNA as escribed in de Filippo, Meyer and Prüfer, "Quantifying and reducing spurious alignments for the analysis of ultra-short ancient DNA sequences" 2018 BMC Biology 2018 16:121.
 
-Here it is the procedure to estimate the proportion of spurious alignments in ancient DNA as escribed in de Filippo et al. (2018).
 Although the method is applied directly to hominin DNA, it works with any spiecies as long as there is a close reference genome and some data of the variation within spieces.
 
 Make sure you have the following software/tool/languages/packages installed: (1) samtools and tabix (2) python3 (including pysam and scipy.stats module)
