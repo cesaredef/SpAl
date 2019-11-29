@@ -61,17 +61,14 @@ args = parser.parse_args()
 
 input_file = args.input_file
 infosites = args.sites
-try:
-    if not os.path.isfile(input_file):
-        print("Input.bam file doesn't exist.\nUse -i option to specify it.")
-        exit()
-    if not os.path.isfile(infosites): 
-        print("The table with informative sites doesn't exist.\nUse -s option to specify it.")
-        exit()
-except ValueError:
+if not os.path.isfile(input_file):
+    print("Input.bam file doesn't exist.\nUse -i option to specify it.")
+    exit()
+if not os.path.isfile(infosites):
+    print("The table with informative sites doesn't exist.\nUse -s option to specify it.")
     exit()
     
-# The arguments to be used later in the script. 
+# The other arguments to be used later and easier in the script. 
 
 BQ_cutoff = args.BaseQual
 MQ_cutoff = args.MapQual
@@ -220,7 +217,7 @@ def main():
     r = list(range(minLength, maxLength))
     with pysam.AlignmentFile(input_file, "rb", check_sq=False) as samfile, pysam.TabixFile(infosites) as tabixfile:
         for chrom in [str(k) for k in range(1, 23)] + ['X']:
-            for read in samfile.fetch(chrom):
+            for read in samfile.fetch(chrom, until_eof=True): # until_eof=True prevent pysam to complain if there is no index file.
                 Cigar = read.cigarstring
                 if (rm_Indels):
                     if 'I' in Cigar or 'D' in Cigar:
