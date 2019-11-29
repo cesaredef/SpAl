@@ -22,6 +22,7 @@ class LineWrapRawTextHelpFormatter(argparse.RawDescriptionHelpFormatter):
 
 import time
 import math
+import os
 from collections import OrderedDict
 
 # Libraries to be installed before
@@ -58,9 +59,20 @@ parser.add_argument('-T', dest='Transversions',
 args = parser.parse_args()
 
 
-# The arguments to be used later in the script. 
 input_file = args.input_file
 infosites = args.sites
+try:
+    if not os.path.isfile(input_file):
+        print("Input.bam file doesn't exist.\nUse -i option to specify it.")
+        exit()
+    if not os.path.isfile(infosites): 
+        print("The table with informative sites doesn't exist.\nUse -s option to specify it.")
+        exit()
+except ValueError:
+    exit()
+    
+# The arguments to be used later in the script. 
+
 BQ_cutoff = args.BaseQual
 MQ_cutoff = args.MapQual
 minLength = args.minLength
