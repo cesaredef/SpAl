@@ -1,5 +1,6 @@
 # SpAl
-Estimating Sthe proportion of spurious alignments in ancient DNA as escribed in de Filippo, Meyer and Prüfer, "Quantifying and reducing spurious alignments for the analysis of ultra-short ancient DNA sequences" BMC Biology 2018 16:121.
+Estimating the proportion of spurious alignments in ancient DNA as described in:
+de Filippo, Meyer and Prüfer, "Quantifying and reducing spurious alignments for the analysis of ultra-short ancient DNA sequences" BMC Biology 2018 16:121.
 
 Although the method is applied directly to hominin DNA, it works with any spiecies as long as there is a close reference genome and some data of the variation within spieces.
 
