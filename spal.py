@@ -47,6 +47,7 @@ parser.add_argument('-q', dest='BaseQual',
                     help='Minimum base quality (BQ) value. Default is 30.',   type=int, default=30)
 parser.add_argument('-m', dest='MapQual',
                     help='Minimum mapping quality (MQ) value. Default is 1.', type=int, default=1)
+
 parser.add_argument('-d', dest='deam',
                     help="Consider putatively deaminated sequences at the last i,j (5',3') terminal positions.", type=str, default="0,0", required=False)
 parser.add_argument('-I', dest='Indels',
@@ -55,6 +56,10 @@ parser.add_argument('-D', dest='DoubleStrand',
                     help="The library is double stranded. Single stranded is the default.", default=False, required=False, action='store_true')
 parser.add_argument('-T', dest='Transversions',
                     help="Use only transversions from the informative sites (-s option).", default=False, required=False, action='store_true')
+
+## To be added, since so far it's only an argument. 
+parser.add_argument('-c', dest='correct',
+                    help='Model or number of mismatches to correct for spurious misclassified alignments. Default is bwa_anc.',  type=str, default='bwa_anc')
 
 args = parser.parse_args()
 
@@ -68,7 +73,7 @@ if not os.path.isfile(infosites):
     print("The table with informative sites doesn't exist.\nUse -s option to specify it.")
     exit()
     
-# The other arguments to be used later and easier in the script. 
+# The other arguments to be used later and easier in the script.
 
 BQ_cutoff = args.BaseQual
 MQ_cutoff = args.MapQual
@@ -208,7 +213,7 @@ def main():
     output_table = OrderedDict({i: {'Ref': 0, 'Mod': 0, 'Oth': 0,
                                     'Ref_SF': 0, 'Mod_SF': 0, 'Oth_SF': 0} for i in range(minLength, maxLength+1)})
 
-    # Max divergence allowed in bwa using the ancient paramenters and used to correct the estimates of spurious alignments.
+    # Max divergence allowed in bwa using the ancient paramenters '-n 0.01 -o 2 -l 16500'. This will be used used to correct the estimates of spurious alignments.
     MaxDivBWA = {'20': 2, '21': 2,
                  '22': 3, '23': 3,  '24': 3,  '25': 3,  '26': 3,  '27': 3,  '28': 3,  '29': 3,  '30': 3,  '31': 3,  '32': 3,  '33': 3,  '34': 3,  '35': 3,  '36': 3,  '37': 3,  '38': 3,  '39': 3,  '40': 3,  '41': 3,
                  '42': 4, '43': 4, '44': 4, '45': 4, '46': 4, '47': 4, '48': 4, '49': 4, '50': 4, '51': 4, '52': 4, '53': 4, '54': 4, '55': 4, '56': 4, '57': 4, '58': 4, '59': 4, '60': 4}
@@ -261,7 +266,7 @@ def main():
                                         if pass_SF:
                                             output_table[L][ret_type + '_SF'] += 1
 
-    print('bp\tRef\tMod\tOth\tRef_SF\tMod_SF\tOth_SF\tSpuriousAln_(95%CI)\tSpuriousAln_SF(95%CI)')
+    print('bp\tRef\tMod\tOth\tRef_SF\tMod_SF\tOth_SF\tSpuriousAln(95%CI)\tSpuriousAln_SF(95%CI)')
     SpAl = []
     TrAl = []
     for i, elem in sorted(output_table.items()):
